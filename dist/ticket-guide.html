@@ -121,6 +121,11 @@
       object-fit: contain;
     }
 
+    .ticket-inline-symbol[src*="icon-diamond"] {
+      height: 1.6em;
+      vertical-align: -0.35em;
+    }
+
     .ticket-inline-arrow {
       height: 1.25em;
       vertical-align: -0.22em;
@@ -387,13 +392,29 @@
 
             <p class="ticket-step-description">
               折ったチケットを18ページに重ねて<br>
-              三角形が隠れないように
+              <img
+                src="./assets/icon-diamond.png"
+                alt="黄色いひし形"
+                class="ticket-inline-symbol"
+              >
+              が隠れないように
               <img
                 src="./assets/icon-arrow-right.png"
                 alt="青い右矢印"
                 class="ticket-inline-symbol ticket-inline-arrow"
               >
               を作ろう
+            </p>
+          </div>
+        </li>
+
+        <!-- Step 5 -->
+        <li>
+          <div class="ticket-step-heading">
+            <span class="ticket-step-number" aria-hidden="true"></span>
+
+            <p class="ticket-step-description">
+              この状態でもう一度謎を解き直そう
             </p>
           </div>
         </li>
