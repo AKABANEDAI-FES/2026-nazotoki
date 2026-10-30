@@ -1,44 +1,433 @@
+
 <!doctype html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
+
   <title>チケットの使い方｜INIAD PORT</title>
   <meta name="theme-color" content="#0a3152">
+
   <link rel="stylesheet" href="./styles.css?v=20261027-cleanup">
+
+  <style>
+    /* ----------------------------------
+       Ticket Guide Design
+       ---------------------------------- */
+
+    .ticket-guide-steps {
+      --guide-navy: #0a3152;
+      --guide-blue: #285575;
+      --guide-gold: #d4a949;
+      --guide-paper: #fffdf7;
+      --guide-border: #e3e9eb;
+
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 52px 24px 36px;
+
+      color: var(--guide-navy);
+      font-family:
+        "Hiragino Kaku Gothic ProN",
+        "Hiragino Sans",
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+      font-weight: 500;
+      line-height: 1.85;
+      letter-spacing: 0.035em;
+    }
+
+    .ticket-guide-lead {
+      margin: 0 0 32px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--guide-blue);
+      letter-spacing: 0.08em;
+    }
+
+    /* Steps */
+
+    .ticket-step-list {
+      list-style: none;
+      counter-reset: ticket-step;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 22px;
+    }
+
+    .ticket-step-list > li {
+      counter-increment: ticket-step;
+      margin: 0;
+      padding: 30px 34px 34px;
+
+      border: 1px solid var(--guide-border);
+      border-radius: 14px;
+      background: var(--guide-paper);
+      box-shadow: 0 5px 22px rgba(10,49,82,.045);
+    }
+
+    .ticket-step-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .ticket-step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 44px;
+      height: 44px;
+
+      background: var(--guide-navy);
+      color: #fff;
+      border-radius: 50%;
+
+      font-family: Georgia, serif;
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .ticket-step-number::before {
+      content: counter(ticket-step, decimal-leading-zero);
+    }
+
+    .ticket-step-description {
+      flex: 1;
+      min-width: 0;
+      margin: 3px 0 0;
+
+      font-size: clamp(17px, 2.4vw, 21px);
+      font-weight: 600;
+      line-height: 2;
+      letter-spacing: 0.035em;
+      overflow-wrap: anywhere;
+    }
+
+    /* Inline symbols */
+
+    .ticket-inline-symbol {
+      display: inline-block;
+      height: 1.05em;
+      width: auto;
+      max-width: none;
+      vertical-align: -0.14em;
+      margin: 0 0.12em;
+      object-fit: contain;
+    }
+
+    .ticket-inline-arrow {
+      height: 1.25em;
+      vertical-align: -0.22em;
+    }
+
+    /* Step illustrations */
+
+    .ticket-fold-image {
+      display: block;
+      width: 100%;
+      max-width: 540px;
+      height: auto;
+      object-fit: contain;
+      margin: 25px auto 0;
+    }
+
+    .ticket-step-list > li:first-child
+    .ticket-fold-image {
+      max-width: 560px;
+    }
+
+    .ticket-step-list > li:nth-child(2)
+    .ticket-fold-image {
+      max-width: 470px;
+    }
+
+    /* Help section */
+
+    .ticket-help-panel {
+      margin: 38px 0 0;
+      padding: 32px 26px 36px;
+      border-radius: 14px;
+      background: #edf3f6;
+      border: 1px solid #d7e3e9;
+      text-align: center;
+    }
+
+    .ticket-help-label {
+      margin: 0 0 12px;
+      color: #54758b;
+      font-family: Georgia, serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+    }
+
+    .ticket-help-text {
+      margin: 0;
+      color: var(--guide-navy);
+      font-size: clamp(17px, 2.5vw, 21px);
+      line-height: 1.9;
+      font-weight: 600;
+    }
+
+    .ticket-help-keyword {
+      display: inline-block;
+      padding: 1px 11px;
+      margin: 0 3px;
+      background: #fff;
+      border: 1px solid #cbd9e1;
+      border-radius: 6px;
+      color: var(--guide-navy);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 600px) {
+      .ticket-guide-steps {
+        padding: 30px 16px 24px;
+        letter-spacing: 0.015em;
+      }
+
+      .ticket-guide-lead {
+        margin-bottom: 22px;
+        font-size: 12px;
+      }
+
+      .ticket-step-list {
+        gap: 15px;
+      }
+
+      .ticket-step-list > li {
+        padding: 22px 18px 26px;
+        border-radius: 10px;
+      }
+
+      .ticket-step-heading {
+        gap: 12px;
+      }
+
+      .ticket-step-number {
+        flex-basis: 34px;
+        height: 34px;
+        font-size: 15px;
+      }
+
+      .ticket-step-description {
+        margin-top: 0;
+        font-size: 16px;
+        line-height: 1.95;
+      }
+
+      .ticket-fold-image {
+        margin-top: 20px;
+      }
+
+      .ticket-help-panel {
+        margin-top: 25px;
+        padding: 24px 16px;
+        border-radius: 10px;
+      }
+
+      .ticket-help-text {
+        font-size: 16px;
+      }
+
+      .ticket-help-label {
+        font-size: 11px;
+      }
+    }
+  </style>
+
   <script>
-    if (sessionStorage.getItem('iniad-ticket-unlocked') !== 'true') {
+    if (
+      sessionStorage.getItem('iniad-ticket-unlocked')
+      !== 'true'
+    ) {
       window.location.replace('./index.html#records');
     }
   </script>
 </head>
+
 <body class="guide-page">
+
+  <!-- Header -->
   <header class="guide-port-header">
-    <a class="brand" href="./index.html#top" aria-label="INIAD PORT ホーム">
-      <span class="brand-mark" aria-hidden="true"><img src="./assets/ship-logo.png" alt=""></span>
-      <span><strong>INIAD PORT</strong><small>イニアド ポート</small></span>
+    <a
+      class="brand"
+      href="./index.html#top"
+      aria-label="INIAD PORT ホーム"
+    >
+      <span class="brand-mark" aria-hidden="true">
+        <img src="./assets/ship-logo.png" alt="">
+      </span>
+      <span>
+        <strong>INIAD PORT</strong>
+        <small>イニアド ポート</small>
+      </span>
     </a>
-    <a class="guide-record-link" href="./index.html#records">旅の記録へ戻る</a>
+
+    <a
+      class="guide-record-link"
+      href="./index.html#records"
+    >
+      旅の記録へ戻る
+    </a>
   </header>
+
+  <!-- Heading -->
   <div class="guide-voyage-heading">
     <div class="guide-voyage-heading-inner">
-      <p class="eyebrow">MEMORIES OF YOUR VOYAGE</p>
-      <p class="guide-breadcrumb"><a href="./index.html#records">旅の記録</a><span aria-hidden="true">／</span>チケットの使い方</p>
-      <h1 id="guide-title">チケットの使い方</h1>
-      <p class="guide-voyage-intro">旅で使ったチケットを、<br class="mobile-only">アルバムに残しましょう。</p>
+      <p class="eyebrow">
+        MEMORIES OF YOUR VOYAGE
+      </p>
+
+      <p class="guide-breadcrumb">
+        <a href="./index.html#records">旅の記録</a>
+        <span aria-hidden="true">／</span>
+        チケットの使い方
+      </p>
+
+      <h1 id="guide-title">
+        チケットの使い方
+      </h1>
+
+      <p class="guide-voyage-intro">
+        旅で使ったチケットを、
+        <br class="mobile-only">
+        アルバムに残しましょう。
+      </p>
     </div>
   </div>
+
+  <!-- Main -->
   <main class="ticket-guide-main">
-    <section class="ticket-guide-image-sheet" aria-labelledby="guide-title">
-      <img class="ticket-instructions-image" src="./assets/ticket-guide-steps-1-3.png" alt="チケットの使い方。1. 青色の点線に合わせて山折りして半分にしよう。2. 黄色の点線に合わせて正方形の対角線を山折りしよう。3. 二つの三角形を合わせて、黄色いひし形のマークを作ろう。">
-      <img class="ticket-instructions-image" src="./assets/ticket-guide-steps-4-5.png" alt="4. 完成！ 折り上がりの図。5. 折ったチケットを18ページに重ねて、三角形が隠れないように青い矢印を作ろう。ここから先わからなくなったら、イニャーに「ヘルプ」と送ろう！">
+
+    <section
+      class="ticket-guide-steps"
+      aria-labelledby="guide-title"
+    >
+
+      <ol class="ticket-step-list">
+
+        <!-- Step 1 -->
+        <li>
+          <div class="ticket-step-heading">
+            <span class="ticket-step-number" aria-hidden="true"></span>
+
+            <p class="ticket-step-description">
+              半分に折って
+              <img
+                src="./assets/icon-triangle-down.png"
+                alt="黄色い逆三角形"
+                class="ticket-inline-symbol"
+              >
+              を2つ作ろう
+            </p>
+          </div>
+
+          <img
+            src="./assets/ticket-guide-step1.png"
+            alt="チケットを半分に折る手順"
+            class="ticket-fold-image"
+          >
+        </li>
+
+        <!-- Step 2 -->
+        <li>
+          <div class="ticket-step-heading">
+            <span class="ticket-step-number" aria-hidden="true"></span>
+
+            <p class="ticket-step-description">
+              下の画像になるように<br>
+              正方形の対角線を山折りしよう
+            </p>
+          </div>
+
+          <img
+            src="./assets/ticket-guide-step2.png"
+            alt="正方形の対角線を山折りする手順"
+            class="ticket-fold-image"
+          >
+        </li>
+
+        <!-- Step 3 -->
+        <li>
+          <div class="ticket-step-heading">
+            <span class="ticket-step-number" aria-hidden="true"></span>
+
+            <p class="ticket-step-description">
+              2つの
+              <img
+                src="./assets/icon-triangle-down.png"
+                alt="黄色い逆三角形"
+                class="ticket-inline-symbol"
+              >
+              を合わせて
+              <img
+                src="./assets/icon-diamond.png"
+                alt="黄色いひし形"
+                class="ticket-inline-symbol"
+              >
+              を作ろう
+            </p>
+          </div>
+        </li>
+
+        <!-- Step 4 -->
+        <li>
+          <div class="ticket-step-heading">
+            <span class="ticket-step-number" aria-hidden="true"></span>
+
+            <p class="ticket-step-description">
+              折ったチケットを18ページに重ねて<br>
+              三角形が隠れないように
+              <img
+                src="./assets/icon-arrow-right.png"
+                alt="青い右矢印"
+                class="ticket-inline-symbol ticket-inline-arrow"
+              >
+              を作ろう
+            </p>
+          </div>
+        </li>
+
+      </ol>
+
+      <!-- Help -->
+      <div class="ticket-help-panel">
+        <p class="ticket-help-text">
+          ここから先わからなくなったら<br>
+          イニャーに
+          「ヒント」
+          と送ろう！
+        </p>
+      </div>
+
     </section>
-    <a class="guide-back guide-bottom-back" href="./index.html#records">← 旅の記録へ戻る</a>
+
+    <a
+      class="guide-back guide-bottom-back"
+      href="./index.html#records"
+    >
+      ← 旅の記録へ戻る
+    </a>
+
   </main>
+
+  <!-- Footer -->
   <footer>
-    <div class="footer-brand"><strong>INIAD PORT</strong><span>時の海の船着場</span></div>
+    <div class="footer-brand">
+      <strong>INIAD PORT</strong>
+      <span>時の海の船着場</span>
+    </div>
     <p>よい航海を。いつか、またこの港で。</p>
   </footer>
+
 </body>
 </html>
